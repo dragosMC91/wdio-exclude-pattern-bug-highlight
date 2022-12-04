@@ -1,12 +1,13 @@
+const getDynamicArgs = () => {
+    const extraCaps = [];
+    if (process.env.ENABLE_REMOTE_DEBUG) extraCaps.push('--remote-debugging-port=9222');
+    return extraCaps;
+};
+
 exports.config = {
     specs: [
         './test/specs/suite1/*.js',
     ],
-    suites: {
-        s1: ['./test/specs/suite1/*.test.js'],
-        s2: ['./test/specs/suite2/*.test.js'],
-        s3: ['./test/specs/suite3/*.test.js'],
-    },
     maxInstances: 10,
     capabilities: [
         {
@@ -20,6 +21,7 @@ exports.config = {
                 args: [
                     '--no-sandbox',
                     '--headless',
+                    ...getDynamicArgs(),
                     '--disable-dev-shm-usage',
                     '--window-position=1050,210',
                     '--window-size=1366,768',
@@ -39,6 +41,7 @@ exports.config = {
                 },
                 args: [
                     '--headless',
+                    ...getDynamicArgs(),
                     '--window-position=1050,210',
                     'use-mobile-user-agent',
                 ],
@@ -59,7 +62,7 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['chromedriver'],
+    services: ['chromedriver', 'intercept'],
     framework: 'mocha',
     reporters: [],
 
