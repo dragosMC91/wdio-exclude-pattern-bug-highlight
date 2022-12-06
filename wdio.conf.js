@@ -1,8 +1,5 @@
 import { setValue } from '@wdio/shared-store-service';
 import HomePage from '#po/home';
-const pageObjects = {
-    HomePage: HomePage,
-};
 
 export const config = {
     specs: [
@@ -18,6 +15,7 @@ export const config = {
         {
             browserName: 'chrome',
             'goog:platformName': 'desktop',
+            'goog:customStuff': 'pageObjects',
             exclude: [
                 './test/specs/**/*mobile*.js'
             ],
@@ -71,7 +69,11 @@ export const config = {
 
     onPrepare: [
         async function (config, capabilities) {
-            await setValue('pageObjects', pageObjects)
+            await setValue('pageObjects', {
+                'key':'val',
+                'key2':'val2',
+                'key3':'val3',
+            })
         }
     ],
 
