@@ -1,17 +1,23 @@
 {
     "engines": {
-        "node": "16.18.0"
+        "node": "18.12.1"
     },
     "name": "webdriverio-tests",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
+    "license": "whatever",
+    "imports": {
+        "#po/*": "./test/pageObjects/*.js"
+    },
     "devDependencies": {
-        "@wdio/cli": "7.27.0",
-        "@wdio/local-runner": "7.27.0",
-        "@wdio/mocha-framework": "7.26.0",
-        "chromedriver": "106.0.0",
-        "wdio-chromedriver-service": "7.3.2",
-        "webdriverio": "7.27.0"
+        "@wdio/cli": "8.0.5",
+        "@wdio/local-runner": "8.0.5",
+        "@wdio/mocha-framework": "8.0.2",
+        "@wdio/shared-store-service": "^8.0.2",
+        "chromedriver": "108.0.0",
+        "wdio-chromedriver-service": "8.0.0",
+        "webdriverio": "8.0.5"
     },
     "scripts": {
         "wdio": "wdio run wdio.conf.js",

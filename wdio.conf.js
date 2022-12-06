@@ -1,4 +1,10 @@
-exports.config = {
+import { setValue } from '@wdio/shared-store-service';
+import HomePage from '#po/home';
+const pageObjects = {
+    HomePage: HomePage,
+};
+
+export const config = {
     specs: [
         './test/specs/suite1/*.js',
     ],
@@ -59,9 +65,15 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['chromedriver'],
+    services: ['chromedriver', 'shared-store'],
     framework: 'mocha',
     reporters: [],
+
+    onPrepare: [
+        async function (config, capabilities) {
+            await setValue('pageObjects', pageObjects)
+        }
+    ],
 
     mochaOpts: {
         ui: 'bdd',
