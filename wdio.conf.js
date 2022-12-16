@@ -1,23 +1,18 @@
 import { setValue } from '@wdio/shared-store-service';
-import HomePage from '#po/home';
-
 export const config = {
     specs: [
-        './test/specs/suite1/*.js',
+        './specs/**/*.test.js',
+        '../commons/specs/**/*.test.js',
     ],
-    suites: {
-        s1: ['./test/specs/suite1/*.test.js'],
-        s2: ['./test/specs/suite2/*.test.js'],
-        s3: ['./test/specs/suite3/*.test.js'],
-    },
-    maxInstances: 10,
+    maxInstances: 1,
     capabilities: [
         {
             browserName: 'chrome',
             'goog:platformName': 'desktop',
             'goog:customStuff': 'pageObjects',
             exclude: [
-                './test/specs/**/*mobile*.js'
+                './specs/**/*mobile*.js',
+                '../commons/specs/**/*mobile*.js',
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
             'goog:chromeOptions': {
@@ -33,8 +28,10 @@ export const config = {
         {
             browserName: 'chrome',
             'goog:platformName': 'mobile',
+            'goog:customStuff': 'pageObjects',
             exclude: [
-                './test/specs/**/*desktop*.js'
+                './specs/**/*desktop*.js',
+                '../commons/specs/**/*desktop*.js',
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
             'goog:chromeOptions': {
@@ -66,7 +63,6 @@ export const config = {
     services: ['chromedriver', 'shared-store'],
     framework: 'mocha',
     reporters: [],
-
     onPrepare: [
         async function (config, capabilities) {
             await setValue('pageObjects', {
@@ -74,8 +70,12 @@ export const config = {
                 'key2':'val2',
                 'key3':'val3',
             })
-        }
+        },
     ],
+    before: async function(caps, specs, browser) {
+        browser.custom = "basic wdio conf"
+    },
+
 
     mochaOpts: {
         ui: 'bdd',

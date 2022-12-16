@@ -1,13 +1,15 @@
+import { settings } from '#app/settings';
+
 export default class HomePage {
     static async doStuff() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve('stuff done');
+                resolve('base home page actions');
             }, 2000)
         });
     };
 
-    static async returnStuff() {
-        return "A coconut"
+    static returnStuff() {
+        return "Base home page"
     };
 };

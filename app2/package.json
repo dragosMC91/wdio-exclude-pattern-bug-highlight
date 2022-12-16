@@ -1,0 +1,13 @@
+{
+    "name": "app2",
+    "version": "1.0.0",
+    "private": true,
+    "license": "UNLICENSED",
+    "type": "module",
+    "imports": {
+        "#app/*": "./*.js"
+    },
+    "scripts": {
+        "test": "wdio wdio.app2.conf.js"
+    }
+}

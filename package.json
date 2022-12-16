@@ -7,20 +7,21 @@
     "private": true,
     "type": "module",
     "license": "whatever",
-    "imports": {
-        "#po/*": "./test/pageObjects/*.js"
-    },
     "devDependencies": {
         "@wdio/cli": "8.0.5",
         "@wdio/local-runner": "8.0.5",
         "@wdio/mocha-framework": "8.0.2",
         "@wdio/shared-store-service": "^8.0.2",
         "chromedriver": "108.0.0",
+        "deepmerge": "^4.2.2",
         "wdio-chromedriver-service": "8.0.0",
         "webdriverio": "8.0.5"
     },
-    "scripts": {
-        "wdio": "wdio run wdio.conf.js",
-        "test": "wdio wdio.conf.js"
-    }
+    "imports": {
+        "commons/*": "./commons/*"
+    },
+    "workspaces": [
+        "app2",
+        "commons"
+    ]
 }
