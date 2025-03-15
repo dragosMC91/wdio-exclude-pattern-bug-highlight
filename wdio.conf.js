@@ -19,7 +19,6 @@ exports.config = {
             'goog:chromeOptions': {
                 args: [
                     '--no-sandbox',
-                    '--headless',
                     '--disable-dev-shm-usage',
                     '--window-position=1050,210',
                     '--window-size=1366,768',
@@ -38,7 +37,6 @@ exports.config = {
                     deviceName: 'iPhone 8',
                 },
                 args: [
-                    '--headless',
                     '--window-position=1050,210',
                     'use-mobile-user-agent',
                 ],
@@ -59,7 +57,6 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['chromedriver'],
     framework: 'mocha',
     reporters: [],
 

@@ -1,10 +1,14 @@
 {
-    "target": "ES6",
-    "moduleResolution": "node",
     "compilerOptions": {
+        "target": "ES2023",
+        "lib": ["ES2023"],
+        "moduleResolution": "node",
         "baseUrl": "./",
         "types": [
-            "./node_modules/webdriverio/async",
+            "node",
+            "./node_modules/@wdio/globals/types",
+            "./node_modules/@wdio/mocha-framework",
+            "./types/wdio",
         ]
     },
     "exclude": ["node_modules"]
