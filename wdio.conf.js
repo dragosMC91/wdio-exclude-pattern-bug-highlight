@@ -13,6 +13,7 @@ exports.config = {
     capabilities: [
         {
             browserName: 'chrome',
+            'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'desktop',
             exclude: [
                 './test/specs/**/*mobile*.js'
@@ -30,6 +31,7 @@ exports.config = {
         },
         {
             browserName: 'chrome',
+            'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'mobile',
             exclude: [
                 './test/specs/**/*desktop*.js'
