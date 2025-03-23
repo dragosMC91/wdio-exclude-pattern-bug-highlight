@@ -1,3 +1,5 @@
+const headlessCapability = process.env.ENABLE_HEADLESS ? ['--headless=new'] : [];
+
 exports.config = {
     specs: [
         './test/specs/suite1/*.js',
@@ -22,6 +24,7 @@ exports.config = {
                     '--disable-dev-shm-usage',
                     '--window-position=1050,210',
                     '--window-size=1366,768',
+                    ...headlessCapability
                 ],
             },
         },
@@ -37,6 +40,7 @@ exports.config = {
                     deviceName: 'iPhone 8',
                 },
                 args: [
+                    ...headlessCapability,
                     '--window-position=1050,210',
                     'use-mobile-user-agent',
                 ],
