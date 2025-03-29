@@ -1,8 +1,5 @@
-import { performance } from 'perf_hooks'; // Use high-resolution timer
-const path = require('path');
-const fs = require('fs');
+import { performance } from 'perf_hooks';
 const cwd = process.cwd();
-// const dummyHtmlPath = path.join(cwd, 'test.html');
 const dummyHtmlPath = `file://${cwd}/test/test_data/test.html`;
 
 function calculateMean(arr) {
@@ -24,9 +21,9 @@ function calculatePercentile(arr, percentile) {
     // Calculate the index (using the NIST method, R-7)
     // https://en.wikipedia.org/wiki/Percentile#Calculation_methods
     const n = sortedArr.length;
-    if (percentile === 100) return sortedArr[n - 1]; // Max value for 100th percentile
+    if (percentile === 100) return sortedArr[n - 1];
 
-    const index = (percentile / 100) * (n - 1); // 0-based index
+    const index = (percentile / 100) * (n - 1);
     const lowerIndex = Math.floor(index);
     const upperIndex = Math.ceil(index);
     const weight = index - lowerIndex;
