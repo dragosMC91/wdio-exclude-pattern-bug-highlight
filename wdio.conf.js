@@ -15,7 +15,7 @@ exports.config = {
             browserName: 'chrome',
             'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'desktop',
-            exclude: [
+            'wdio:exclude': [
                 './test/specs/**/*mobile*.js'
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
@@ -33,7 +33,7 @@ exports.config = {
             browserName: 'chrome',
             'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'mobile',
-            exclude: [
+            'wdio:exclude': [
                 './test/specs/**/*desktop*.js'
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
@@ -57,7 +57,7 @@ exports.config = {
             },
         },
     ],
-    logLevel: 'info',
+    logLevel: process.env.DEBUG ? 'debug' : 'warn',
     bail: 0,
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
