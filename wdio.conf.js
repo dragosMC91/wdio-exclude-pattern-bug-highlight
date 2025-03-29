@@ -55,7 +55,7 @@ exports.config = {
             },
         },
     ],
-    logLevel: 'info',
+    logLevel: process.env.DEBUG ? 'debug' : 'warn',
     bail: 0,
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,

@@ -1,4 +1,4 @@
-import { performance } from 'perf_hooks';
+const { performance } = require('perf_hooks');
 const cwd = process.cwd();
 const dummyHtmlPath = `file://${cwd}/test/test_data/test.html`;
 
