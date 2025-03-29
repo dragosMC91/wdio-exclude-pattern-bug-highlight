@@ -1,3 +1,5 @@
+const headlessCapability = process.env.ENABLE_HEADLESS ? ['--headless=new'] : [];
+
 exports.config = {
     specs: [
         './test/specs/suite1/*.js',
@@ -11,8 +13,9 @@ exports.config = {
     capabilities: [
         {
             browserName: 'chrome',
+            'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'desktop',
-            exclude: [
+            'wdio:exclude': [
                 './test/specs/**/*mobile*.js'
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
@@ -22,13 +25,15 @@ exports.config = {
                     '--disable-dev-shm-usage',
                     '--window-position=1050,210',
                     '--window-size=1366,768',
+                    ...headlessCapability
                 ],
             },
         },
         {
             browserName: 'chrome',
+            'wdio:enforceWebDriverClassic': true,
             'goog:platformName': 'mobile',
-            exclude: [
+            'wdio:exclude': [
                 './test/specs/**/*desktop*.js'
             ],
             'goog:loggingPrefs': { browser: 'WARNING' },
@@ -37,6 +42,7 @@ exports.config = {
                     deviceName: 'iPhone 8',
                 },
                 args: [
+                    ...headlessCapability,
                     '--window-position=1050,210',
                     'use-mobile-user-agent',
                 ],
@@ -51,7 +57,7 @@ exports.config = {
             },
         },
     ],
-    logLevel: 'error',
+    logLevel: process.env.DEBUG ? 'debug' : 'warn',
     bail: 0,
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
