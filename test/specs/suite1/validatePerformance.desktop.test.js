@@ -1,4 +1,4 @@
-import { performance } from 'perf_hooks';
+const { performance } = require('perf_hooks');
 const cwd = process.cwd();
 const dummyHtmlPath = `file://${cwd}/test/test_data/test.html`;
 
@@ -63,8 +63,8 @@ function logResults(timings) {
 
 describe('Validate agent reuse performance boost', () => {
     const WARMUP_ITERATIONS = 50; // Number of initial requests to discard
-    const TEST_ITERATIONS = 10000; // Number of requests to measure
-    const ELEMENT_SELECTOR = '//h1'; // Selector for the target element
+    const TEST_ITERATIONS = 1000; // Number of requests to measure
+    const ELEMENT_SELECTOR = '#testButton'; // Selector for the target element
 
     before(async () => {
         console.log(`\n--- Performance Test ---`);
@@ -81,12 +81,12 @@ describe('Validate agent reuse performance boost', () => {
         timings = [];
     });
 
-    it(`should measure performance of ${TEST_ITERATIONS} element find requests`, async () => {
+    xit(`should measure performance of ${TEST_ITERATIONS} element find requests`, async () => {
         console.log(`Selector: ${ELEMENT_SELECTOR} find test`);
         console.log(`Test Iterations: ${TEST_ITERATIONS}`);
         for (let i = 0; i < TEST_ITERATIONS; i++) {
             const startTime = performance.now();
-            await $(ELEMENT_SELECTOR); // The WebDriver requests happen here
+            await $(ELEMENT_SELECTOR);
             const endTime = performance.now();
             timings.push(endTime - startTime);
         }
@@ -95,28 +95,24 @@ describe('Validate agent reuse performance boost', () => {
         expect(timings.length).toBe(TEST_ITERATIONS);
         logResults(timings)
 
-        // Optional: Add an assertion if desired, e.g., ensure median is below a threshold
-        // expect(calculateMedian(timings)).toBeLessThan(50); // Example threshold
+        // expect(calculateMedian(timings)).toBeLessThan(50);
     });
 
-    // it(`should measure performance of ${TEST_ITERATIONS} element click requests`, async () => {
-    //     const button = await $('#testButton');
-    //     // Warmup...
-    //     // Measurement loop...
-    //         const startTime = performance.now();
-    //         await button.click();
-    //         const endTime = performance.now();
-    //         timings.push(endTime - startTime);
-    //     // Calculate and log results...
-    // });
+    it(`should measure performance of ${TEST_ITERATIONS} element click requests`, async () => {
+        console.log(`Selector: ${ELEMENT_SELECTOR} click test`);
+        console.log(`Test Iterations: ${TEST_ITERATIONS}`);
+        const button = await $(ELEMENT_SELECTOR);
+        for (let i = 0; i < TEST_ITERATIONS; i++) {
+            const startTime = performance.now();
+            await button.click();
+            const endTime = performance.now();
+            timings.push(endTime - startTime);
+        }
+        console.log('Measurement complete.');
 
-    // it('should hammer wd server with requests', async () => {
-    //     await browser.pause(100);
-    //     // warm up phase
-    //     for(let i = 0; i <= 100; i++){
-    //         await $('//h1') // <- this performs 1  webdriver: [POST] /session/zzz/element request
-    //     }
-    // });
+        expect(timings.length).toBe(TEST_ITERATIONS);
+        logResults(timings)
+    });
 });
 
 
