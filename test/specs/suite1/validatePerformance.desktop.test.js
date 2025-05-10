@@ -63,7 +63,7 @@ function logResults(timings) {
 
 describe('Validate agent reuse performance boost', () => {
     const WARMUP_ITERATIONS = 50; // Number of initial requests to discard
-    const TEST_ITERATIONS = 1000; // Number of requests to measure
+    const TEST_ITERATIONS = 10000; // Number of requests to measure
     const ELEMENT_SELECTOR = '#testButton'; // Selector for the target element
 
     before(async () => {
