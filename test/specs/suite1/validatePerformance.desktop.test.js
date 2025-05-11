@@ -63,7 +63,7 @@ function logResults(timings) {
 
 describe('Validate agent reuse performance boost', () => {
     const WARMUP_ITERATIONS = 50; // Number of initial requests to discard
-    const TEST_ITERATIONS = 10000; // Number of requests to measure
+    const TEST_ITERATIONS = 1000; // Number of requests to measure
     const ELEMENT_SELECTOR = '#testButton'; // Selector for the target element
 
     before(async () => {
@@ -81,7 +81,7 @@ describe('Validate agent reuse performance boost', () => {
         timings = [];
     });
 
-    xit(`should measure performance of ${TEST_ITERATIONS} element find requests`, async () => {
+    it(`should measure performance of ${TEST_ITERATIONS} element find requests`, async () => {
         console.log(`Selector: ${ELEMENT_SELECTOR} find test`);
         console.log(`Test Iterations: ${TEST_ITERATIONS}`);
         for (let i = 0; i < TEST_ITERATIONS; i++) {
@@ -105,6 +105,22 @@ describe('Validate agent reuse performance boost', () => {
         for (let i = 0; i < TEST_ITERATIONS; i++) {
             const startTime = performance.now();
             await button.click();
+            const endTime = performance.now();
+            timings.push(endTime - startTime);
+        }
+        console.log('Measurement complete.');
+
+        expect(timings.length).toBe(TEST_ITERATIONS);
+        logResults(timings)
+    });
+
+    it(`should measure performance of ${TEST_ITERATIONS} element isDisplayed actions`, async () => {
+        console.log(`Selector: ${ELEMENT_SELECTOR} isDisplayed test`);
+        console.log(`Test Iterations: ${TEST_ITERATIONS}`);
+        const button = await $(ELEMENT_SELECTOR);
+        for (let i = 0; i < TEST_ITERATIONS; i++) {
+            const startTime = performance.now();
+            await button.isDisplayed();
             const endTime = performance.now();
             timings.push(endTime - startTime);
         }
