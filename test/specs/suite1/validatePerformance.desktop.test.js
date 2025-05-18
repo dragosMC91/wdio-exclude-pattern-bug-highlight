@@ -130,5 +130,3 @@ describe('Validate agent reuse performance boost', () => {
         logResults(timings)
     });
 });
-
-
