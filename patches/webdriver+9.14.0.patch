@@ -1,0 +1,70 @@
+diff --git a/node_modules/webdriver/build/node.js b/node_modules/webdriver/build/node.js
+index 3fd9e9c..1545a67 100644
+--- a/node_modules/webdriver/build/node.js
++++ b/node_modules/webdriver/build/node.js
+@@ -1898,27 +1898,52 @@ var WebDriverRequest = class {
+     return retry(error);
+   }
+ };
+-
+ // src/request/node.ts
+ dns.setDefaultResultOrder("ipv4first");
++
++const SESSION_DISPATCHERS = new Map()
++const { PROXY_URL, NO_PROXY } = environment.value.variables
++
+ var FetchRequest = class extends WebDriverRequest {
++
+   fetch(url, opts) {
+     return fetch2(url, opts);
+   }
++
++  _getDispatcher(url, options, sessionId) {
++    if (sessionId && SESSION_DISPATCHERS.has(sessionId)) {
++      return SESSION_DISPATCHERS.get(sessionId)
++  }
++
++    /**
++     * Use a proxy agent if we have a proxy url set
++     */
++    const shouldUseProxy =
++        PROXY_URL && !NO_PROXY?.some((str) => url.hostname.endsWith(str))
++
++    const dispatcher = shouldUseProxy ? new ProxyAgent({
++        uri: PROXY_URL,
++        connectTimeout: options.connectionRetryTimeout,
++        headersTimeout: options.connectionRetryTimeout,
++        bodyTimeout: options.connectionRetryTimeout,
++      }) :
++        new Agent({
++            connectTimeout: options.connectionRetryTimeout,
++            headersTimeout: options.connectionRetryTimeout,
++            bodyTimeout: options.connectionRetryTimeout,
++        })
++
++    if(sessionId){
++      console.log("======setting dispatcher")
++        SESSION_DISPATCHERS.set(sessionId, dispatcher)
++    }
++
++    return dispatcher;
++  }
+   async createOptions(options, sessionId, isBrowser = false) {
+     const { url, requestOptions } = await super.createOptions(options, sessionId, isBrowser);
+-    const { PROXY_URL, NO_PROXY } = environment.value.variables;
+-    const dispatcher = PROXY_URL && !NO_PROXY?.some((str) => url.hostname.endsWith(str)) ? new ProxyAgent({
+-      uri: PROXY_URL,
+-      connectTimeout: options.connectionRetryTimeout,
+-      headersTimeout: options.connectionRetryTimeout,
+-      bodyTimeout: options.connectionRetryTimeout
+-    }) : new Agent({
+-      connectTimeout: options.connectionRetryTimeout,
+-      headersTimeout: options.connectionRetryTimeout,
+-      bodyTimeout: options.connectionRetryTimeout
+-    });
+-    requestOptions.dispatcher = dispatcher;
++
++    requestOptions.dispatcher = this._getDispatcher(url, options, sessionId);
+     return { url, requestOptions };
+   }
+ };
