@@ -1,0 +1,43 @@
+diff --git a/node_modules/webdriver/build/node.js b/node_modules/webdriver/build/node.js
+index 3fd9e9c..9819a9a 100644
+--- a/node_modules/webdriver/build/node.js
++++ b/node_modules/webdriver/build/node.js
+@@ -1902,23 +1902,27 @@ var WebDriverRequest = class {
+ // src/request/node.ts
+ dns.setDefaultResultOrder("ipv4first");
+ var FetchRequest = class extends WebDriverRequest {
++  static #dispatcher;
++
+   fetch(url, opts) {
+     return fetch2(url, opts);
+   }
+   async createOptions(options, sessionId, isBrowser = false) {
+     const { url, requestOptions } = await super.createOptions(options, sessionId, isBrowser);
+     const { PROXY_URL, NO_PROXY } = environment.value.variables;
+-    const dispatcher = PROXY_URL && !NO_PROXY?.some((str) => url.hostname.endsWith(str)) ? new ProxyAgent({
+-      uri: PROXY_URL,
+-      connectTimeout: options.connectionRetryTimeout,
+-      headersTimeout: options.connectionRetryTimeout,
+-      bodyTimeout: options.connectionRetryTimeout
+-    }) : new Agent({
+-      connectTimeout: options.connectionRetryTimeout,
+-      headersTimeout: options.connectionRetryTimeout,
+-      bodyTimeout: options.connectionRetryTimeout
+-    });
+-    requestOptions.dispatcher = dispatcher;
++    if(!FetchRequest.#dispatcher){
++      FetchRequest.#dispatcher = PROXY_URL && !NO_PROXY?.some((str) => url.hostname.endsWith(str)) ? new ProxyAgent({
++        uri: PROXY_URL,
++        connectTimeout: options.connectionRetryTimeout,
++        headersTimeout: options.connectionRetryTimeout,
++        bodyTimeout: options.connectionRetryTimeout
++      }) : new Agent({
++        connectTimeout: options.connectionRetryTimeout,
++        headersTimeout: options.connectionRetryTimeout,
++        bodyTimeout: options.connectionRetryTimeout
++      });
++    }
++    requestOptions.dispatcher = FetchRequest.#dispatcher;
+     return { url, requestOptions };
+   }
+ };
