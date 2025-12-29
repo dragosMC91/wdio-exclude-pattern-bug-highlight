@@ -1,10 +1,159 @@
 <!DOCTYPE html>
-<html>
-<head><title>Perf Test</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDriverIO Performance Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; margin-bottom: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .section-title { font-weight: bold; margin-bottom: 10px; color: #555; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            font-size: 14px;
+        }
+        button:hover { background: #0056b3; }
+        button.secondary { background: #6c757d; }
+        button.success { background: #28a745; }
+        input, select, textarea {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="text"] { width: 200px; }
+        textarea { width: 300px; height: 80px; resize: vertical; }
+        .link-section a { margin: 0 10px; color: #007bff; }
+        .hidden-element { display: none; }
+        .visible-element { display: block; }
+        #result { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 4px; min-height: 40px; }
+        .list-item { padding: 8px; margin: 4px 0; background: #f8f9fa; border-radius: 4px; }
+        .checkbox-group label { display: block; margin: 5px 0; }
+    </style>
+</head>
 <body>
-    <h1>Performance Test Target</h1>
-    <p>Some paragraph text.</p>
-    <button id="testButton">Click Me</button>
-    <div id="result"></div>
+    <div class="container">
+        <h1 id="pageTitle">WebDriverIO Performance Test Page</h1>
+        <p id="description">This page contains various elements for performance testing WebDriverIO commands.</p>
+
+        <!-- Button Section -->
+        <div class="section" id="buttonSection">
+            <div class="section-title">Buttons</div>
+            <button id="testButton" data-testid="primary-btn" data-action="test">Click Me</button>
+            <button id="secondaryBtn" class="secondary" data-testid="secondary-btn">Secondary</button>
+            <button id="successBtn" class="success" data-testid="success-btn">Success</button>
+            <button id="disabledBtn" disabled>Disabled</button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="section" id="inputSection">
+            <div class="section-title">Input Fields</div>
+            <div>
+                <input type="text" id="textInput" placeholder="Enter text..." value="default value" data-testid="text-input">
+                <input type="email" id="emailInput" placeholder="email@example.com">
+                <input type="password" id="passwordInput" placeholder="Password">
+            </div>
+            <div>
+                <input type="number" id="numberInput" value="42" min="0" max="100">
+                <input type="checkbox" id="checkboxInput" checked>
+                <label for="checkboxInput">Checkbox label</label>
+            </div>
+            <div>
+                <textarea id="textareaInput" placeholder="Enter multiple lines...">Sample text content</textarea>
+            </div>
+        </div>
+
+        <!-- Select Section -->
+        <div class="section" id="selectSection">
+            <div class="section-title">Dropdowns</div>
+            <select id="selectInput" data-testid="select-dropdown">
+                <option value="">Select an option</option>
+                <option value="option1">Option 1</option>
+                <option value="option2" selected>Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+            <select id="multiSelect" multiple size="3">
+                <option value="a">Choice A</option>
+                <option value="b">Choice B</option>
+                <option value="c">Choice C</option>
+            </select>
+        </div>
+
+        <!-- Link Section -->
+        <div class="section link-section" id="linkSection">
+            <div class="section-title">Links</div>
+            <a href="#section1" id="link1" data-testid="link-1">Link One</a>
+            <a href="#section2" id="link2" data-testid="link-2">Link Two</a>
+            <a href="#section3" id="link3" data-testid="link-3">Link Three</a>
+        </div>
+
+        <!-- List Section -->
+        <div class="section" id="listSection">
+            <div class="section-title">List Items</div>
+            <div class="list-item" data-index="0">Item 1</div>
+            <div class="list-item" data-index="1">Item 2</div>
+            <div class="list-item" data-index="2">Item 3</div>
+            <div class="list-item" data-index="3">Item 4</div>
+            <div class="list-item" data-index="4">Item 5</div>
+        </div>
+
+        <!-- Visibility Test Section -->
+        <div class="section" id="visibilitySection">
+            <div class="section-title">Visibility Tests</div>
+            <div id="visibleElement" class="visible-element">This element is visible</div>
+            <div id="hiddenElement" class="hidden-element">This element is hidden</div>
+            <div id="elementWithOpacity" style="opacity: 0.5;">Semi-transparent element</div>
+        </div>
+
+        <!-- Checkbox Group -->
+        <div class="section checkbox-group" id="checkboxSection">
+            <div class="section-title">Checkbox Group</div>
+            <label><input type="checkbox" name="options" value="opt1" class="option-checkbox"> Option 1</label>
+            <label><input type="checkbox" name="options" value="opt2" class="option-checkbox" checked> Option 2</label>
+            <label><input type="checkbox" name="options" value="opt3" class="option-checkbox"> Option 3</label>
+        </div>
+
+        <!-- Radio Group -->
+        <div class="section" id="radioSection">
+            <div class="section-title">Radio Buttons</div>
+            <label><input type="radio" name="radio" value="r1" class="radio-option"> Radio 1</label>
+            <label><input type="radio" name="radio" value="r2" class="radio-option" checked> Radio 2</label>
+            <label><input type="radio" name="radio" value="r3" class="radio-option"> Radio 3</label>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result" data-testid="result-container">
+            <span id="resultText">Result will appear here</span>
+        </div>
+    </div>
+
+    <script>
+        // Simple click counter for testing
+        let clickCount = 0;
+        document.getElementById('testButton').addEventListener('click', function() {
+            clickCount++;
+            document.getElementById('resultText').textContent = 'Button clicked ' + clickCount + ' times';
+        });
+    </script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 {
     "engines": {
         "node": "22.15.0",
-        "yarn": "1.22.19"
+        "pnpm": ">=9.0.0"
     },
+    "packageManager": "pnpm@9.15.0",
     "name": "webdriverio-tests",
     "version": "0.1.0",
     "private": true,
@@ -12,12 +13,16 @@
         "@wdio/local-runner": "^9.19.2",
         "@wdio/mocha-framework": "^9.19.2",
         "@wdio/spec-reporter": "^9.19.2",
+        "@eslint/js": "^9.17.0",
+        "eslint": "^9.17.0",
         "patch-package": "^8.0.0",
         "webdriverio": "^9.19.2"
     },
     "scripts": {
         "wdio": "wdio run wdio.conf.js",
         "test": "wdio wdio.conf.js",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "postinstall": "patch-package"
     }
 }

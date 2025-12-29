@@ -5,11 +5,11 @@ describe('Showcase isClickable() bug', () => {
             x: window.scrollX,
             y: window.scrollY,
         }));
-        await browser.url("https://webdriver.io/docs/gettingstarted/");
+        await browser.url('https://webdriver.io/docs/gettingstarted/');
         await browser.pause(2000);
-        console.log("Initial page scroll coordinates:", await getPageScroll());
+        console.log('Initial page scroll coordinates:', await getPageScroll());
         await openJsFooterLogo.isClickable();
-        console.log("Page scrool coordinates after isClickable check:", await getPageScroll());
+        console.log('Page scroll coordinates after isClickable check:', await getPageScroll());
         await browser.pause(5000);
     });
 });

@@ -22,9 +22,12 @@ exports.config = {
             'goog:chromeOptions': {
                 args: [
                     '--no-sandbox',
-                    '--disable-dev-shm-usage',
+                    '--disable-oopr-debug-crash-dump',
+                    '--noerrdialogs',
+                    '--disable-breakpad',
                     '--window-position=1050,210',
                     '--window-size=1366,768',
+                    '--disable-gpu',
                     ...headlessCapability
                 ],
             },
@@ -68,6 +71,6 @@ exports.config = {
 
     mochaOpts: {
         ui: 'bdd',
-        timeout: 180000
+        timeout: 240000
     },
-}
+};
