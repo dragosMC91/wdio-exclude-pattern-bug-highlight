@@ -1,0 +1,6 @@
+node_modules
+.git
+npm-debug.log
+pnpm-debug.log
+Chrome.dockerfile
+.dockerignore
