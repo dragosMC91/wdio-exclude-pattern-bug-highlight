@@ -2,10 +2,10 @@ const { homedir } = require('os');
 const headlessCapability = process.env.ENABLE_HEADLESS ? ['--headless=new'] : [];
 const chromeVersion = '149.0.7827.53';
 // make sure the local paths are correct after download from https://googlechromelabs.github.io/chrome-for-testing/#stable
-const chromeBinPath = `${homedir()}/.cache/chrome-for-testing/${chromeVersion}/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
-const chromeDriverBinPath = `${homedir()}/.cache/chrome-for-testing/${chromeVersion}/chromedriver-mac-arm64/chromedriver`;
-// const chromeBinPath = '/opt/chrome-linux64/chrome';
-// const chromeDriverBinPath = '/opt/chromedriver-linux64/chromedriver';
+// const chromeBinPath = `${homedir()}/.cache/chrome-for-testing/${chromeVersion}/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
+// const chromeDriverBinPath = `${homedir()}/.cache/chrome-for-testing/${chromeVersion}/chromedriver-mac-arm64/chromedriver`;
+const chromeBinPath = '/opt/chrome-linux64/chrome';
+const chromeDriverBinPath = '/opt/chromedriver-linux64/chromedriver';
 
 exports.config = {
     specs: [
