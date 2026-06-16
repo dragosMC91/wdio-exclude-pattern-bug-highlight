@@ -86,7 +86,7 @@ RUN if ! command -v java > /dev/null; then \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install node
-ARG NODE_VERSION=22.15.0
+ARG NODE_VERSION=24.16.0
 RUN [[ $(uname -m) == "x86_64" ]] && ARCH="x64" || ARCH="arm64" && \
   curl -L -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${ARCH}.tar.xz" && \
   sudo tar -xJf node.tar.xz -C /usr/local --strip-components=1 && \
